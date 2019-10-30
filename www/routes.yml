@@ -1,0 +1,7 @@
+ajout-utilisateur:
+  controller: "user"
+  action: "add"
+
+utilisateur:
+  controller: "user"
+  action: "default"

@@ -13,4 +13,9 @@ class UserController{
 		echo "User add";
 	}
 
+	//http://localhost/user/remove
+	public function removeAction(){
+		echo "L'utilisateur va être supprimé";
+	}
+
 }
