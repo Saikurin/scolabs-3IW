@@ -1,5 +1,14 @@
 <?php
 
+function myAutoloader($class){
+	if(file_exists("core/".$class.".class.php")){
+		include "core/".$class.".class.php";
+	}
+}
+
+spl_autoload_register("myAutoloader");
+
+
 //http://localhost/user/add -> $c = user et $a add
 //http://localhost/user -> $c = user et $a default
 //http://localhost -> $c = default et $a default
