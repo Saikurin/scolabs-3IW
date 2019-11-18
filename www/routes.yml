@@ -1,7 +1,11 @@
-ajout-utilisateur:
+/:
+  controller: default
+  action: default
+
+/ajout-utilisateur:
   controller: "user"
   action: "add"
 
-utilisateur:
+/utilisateur:
   controller: "user"
   action: "default"
