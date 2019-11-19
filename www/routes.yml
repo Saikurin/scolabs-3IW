@@ -2,6 +2,11 @@
   controller: default
   action: default
 
+/test/yves:
+  controller: default
+  action: default
+
+
 /ajout-utilisateur:
   controller: "user"
   action: "add"
@@ -9,3 +14,18 @@
 /utilisateur:
   controller: "user"
   action: "default"
+
+
+/connexion:
+  controller: "user"
+  action: "login"
+
+
+
+
+
+
+
+
+
+
