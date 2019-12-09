@@ -9,6 +9,9 @@ function myAutoloader($class){
 spl_autoload_register("myAutoloader");
 
 
+new ConstantLoader();
+
+
 //http://localhost/user/add -> $c = user et $a add
 //http://localhost/user -> $c = user et $a default
 //http://localhost -> $c = default et $a default

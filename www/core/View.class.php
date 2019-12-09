@@ -3,7 +3,7 @@ class View{
 
 	private $template;
 	private $view;
-	private $data;
+	private $data = [];
 
 
 	public function __construct($view, $template="back"){
