@@ -2,7 +2,8 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800">Dashboard de 
+              <?= $firstname;?></h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
@@ -270,8 +271,27 @@
                   <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
                 </div>
                 <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
+                
+
+                    <!-- intégration du modal carousel -->
+                    <?php 
+                      $data = [
+                              "listOfPictures" => [
+                                      "https://lvdneng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2019/12/08/node_677437/44168912/public/2019/12/08/B9721857098Z.1_20191208154031_000%2BGMAF2SBS6.1-0.jpg?itok=tFkiSmkn1575823913",
+                                      "https://www.letelegramme.fr/images/2019/12/08/photo-francois-destoc_4949602_540x270p.jpg?v=1",
+                                      "https://www.ouest-france.fr/sites/default/files/styles/image-640x360/public/2019/12/06/direct-reforme-des-retraites-nouvelle-journee-de-greve-mardi-10-decembre.jpg?itok=N3VhsTUG"
+                                    ]
+
+                              ];
+
+
+                      $this->addModal("carousel", $data); 
+
+
+                    ?>
+
+
+
                 </div>
               </div>
 
