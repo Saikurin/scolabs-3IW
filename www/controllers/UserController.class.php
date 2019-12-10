@@ -25,6 +25,21 @@ class UserController{
 
 		//Insertion d'un user
 
+		$user = new users();
+		$user->setFirstname("yves");
+		$user->setLastname("Skrzypczyk");
+		$user->setEmail("Y.Skrzypczyk@GMAIL.com");
+		$user->setPwd("Test1234");
+		$user->setStatus(0);
+		$user->save();
+
+
+		$page = new pages();
+		..
+		..
+		..
+		$page->save();
+
 
 
 		$myView = new View("register", "account");

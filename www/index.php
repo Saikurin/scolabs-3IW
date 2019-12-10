@@ -3,6 +3,8 @@
 function myAutoloader($class){
 	if(file_exists("core/".$class.".class.php")){
 		include "core/".$class.".class.php";
+	}else if(file_exists("models/".$class.".model.php")){
+		include "models/".$class.".model.php";
 	}
 }
 
