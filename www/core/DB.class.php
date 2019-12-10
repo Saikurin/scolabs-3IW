@@ -2,11 +2,12 @@
 class DB{
 
 	private $table;
+	private $pdo;
 
 	public function __construct(){
 		//SINGLETON
 		try{
-			new PDO( DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME , DB_USER , DB_PWD);
+			$this->pdo = new PDO( DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME , DB_USER , DB_PWD);
 		}catch(Exception $e){
 			die("Erreur SQL : ".$e->getMessage());
 		}
@@ -18,10 +19,16 @@ class DB{
 
 	public function save(){
 
+		$propChild = get_object_vars($this);
+		$propDB = get_class_vars(get_class());
 
-		// INSERT INTO users (firstname, lastname, email, pwd, status) VALUES (:firstname, :lastname, :email, :pwd, :status);
+		$columnsData = array_diff_key($propChild, $propDB);
+		$columns = array_keys($columnsData);
 
+		$sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
 
+		$queryPrepared = $this->pdo->prepare($sql);
+		$queryPrepared->execute($columnsData);
 
 	}
 

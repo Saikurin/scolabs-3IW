@@ -2,18 +2,18 @@
 
 class users extends DB{
 
-	private $id;
-	private $firstname;
-	private $lastname;
-	private $email;
-	private $pwd;
-	private $status;
+	protected $id;
+	protected $firstname;
+	protected $lastname;
+	protected $email;
+	protected $pwd;
+	protected $status;
 
 
 	public function __construct(){
 		parent::__construct();
 
-		
+
 	}
 
 	public function setId($id){
