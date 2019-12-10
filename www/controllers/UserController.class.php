@@ -25,7 +25,8 @@ class UserController{
 
 		//Insertion d'un user
 		$user = new users();
-		$user->setFirstname("yves");
+		$user->setId(1);
+		$user->setFirstname("Toto");
 		$user->setLastname("Skrzypczyk");
 		$user->setEmail("Y.Skrzypczyk@GMAIL.com");
 		$user->setPwd("Test1234");

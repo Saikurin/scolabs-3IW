@@ -25,7 +25,23 @@ class DB{
 		$columnsData = array_diff_key($propChild, $propDB);
 		$columns = array_keys($columnsData);
 
-		$sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+		
+		if( !is_numeric($this->id) ){
+			
+			//INSERT
+			$sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+
+		}else{
+
+			//UPDATE
+			foreach ($columns as $column) {
+				$sqlUpdate[] = $column."=:".$column;
+			}
+
+			$sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
+
+		}
+
 
 		$queryPrepared = $this->pdo->prepare($sql);
 		$queryPrepared->execute($columnsData);
