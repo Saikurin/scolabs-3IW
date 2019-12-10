@@ -14,7 +14,7 @@
 
   <div class="carousel-inner">
 
-  	<?php foreach( $data["listOfPictures"] as $key => $url):?>
+  	<?php foreach ($data["listOfPictures"] as $key => $url):?>
 	    <div class="carousel-item <?= ($key==0)?"active":""?>">
 	      <img src="<?= $url;?>" class="d-block w-100" >
 	    </div>

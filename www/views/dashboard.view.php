@@ -274,7 +274,7 @@
                 
 
                     <!-- intégration du modal carousel -->
-                    <?php 
+                    <?php
                       $data = [
                               "listOfPictures" => [
                                       "https://lvdneng.rosselcdn.net/sites/default/files/dpistyles_v2/ena_16_9_extra_big/2019/12/08/node_677437/44168912/public/2019/12/08/B9721857098Z.1_20191208154031_000%2BGMAF2SBS6.1-0.jpg?itok=tFkiSmkn1575823913",
@@ -285,7 +285,7 @@
                               ];
 
 
-                      $this->addModal("carousel", $data); 
+                      $this->addModal("carousel", $data);
 
 
                     ?>
