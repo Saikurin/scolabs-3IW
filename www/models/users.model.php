@@ -1,5 +1,6 @@
 <?php
-class users{
+
+class users extends DB{
 
 	private $id;
 	private $firstname;
@@ -10,7 +11,9 @@ class users{
 
 
 	public function __construct(){
+		parent::__construct();
 
+		
 	}
 
 	public function setId($id){

@@ -33,7 +33,7 @@ class ConstantLoader{
 		foreach ($lines as $line) {
 			$data = explode("=", $line);
 			if( !defined($data[0]) && isset($data[1]) )
-				define($data[0], $data[1]);
+				define($data[0], trim($data[1]));
 		}
 
 
