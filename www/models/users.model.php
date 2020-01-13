@@ -56,40 +56,40 @@ class users extends DB
                         "firstname"=>[
                                 "type"=>"text",
                                 "placeholder"=>"Votre prénom",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>"",
                                 "required"=>true
                             ],
                         "lastname"=>[
                                 "type"=>"text",
                                 "placeholder"=>"Votre nom",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>"",
                                 "required"=>true],
                         "email"=>[
                                 "type"=>"email",
                                 "placeholder"=>"Votre email",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>"",
                                 "required"=>true],
                         "pwd"=>[
                                 "type"=>"password",
                                 "placeholder"=>"Votre mot de passe",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>"",
                                 "required"=>true
                             ],
                         "pwdConfirm"=>[
                                 "type"=>"password",
                                 "placeholder"=>"Confirmation",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>"",
                                 "required"=>true,
                                 "confirmWith"=>"pwd"
                             ],
                         "captcha"=>[
                                 "type"=>"captcha",
-                                "class"=>"",
+                                "class"=>"form-control form-control-user",
                                 "id"=>""
                             ]
                     ]
