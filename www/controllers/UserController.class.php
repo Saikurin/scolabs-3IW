@@ -40,8 +40,6 @@ class UserController
         $user->save();
 
 
-
-
         $myView = new View("register", "account");
     }
 
