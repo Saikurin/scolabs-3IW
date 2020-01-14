@@ -11,7 +11,7 @@
                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
               </div>
 
-              <?php $this->addModal("form", users::getRegisterForm() );?>
+              <?php $this->addModal("form", $configFormUser );?>
 
 
               

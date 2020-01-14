@@ -91,6 +91,11 @@ class="<?= $data["config"]["class"]?>">
         <div class="form-group row">
           <div class="col-sm-12">
 
+
+            <?php if($configField["type"] == "captcha"):?>
+                <img src="script/captcha.php" width="300px">
+            <?php endif;?>
+
             <input 
                 value="<?= (isset($inputData[$name]) && $configField["type"]!="password")?$inputData[$name]:'' ?>"
                 type="<?= $configField["type"]??'' ?>"
