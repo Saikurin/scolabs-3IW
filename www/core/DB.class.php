@@ -1,4 +1,5 @@
 <?php
+
 class DB
 {
     private $table;
@@ -8,12 +9,12 @@ class DB
     {
         //SINGLETON
         try {
-            $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
+            $this->pdo = new PDO(DB_DRIVER . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PWD);
         } catch (Exception $e) {
-            die("Erreur SQL : ".$e->getMessage());
+            die("Erreur SQL : " . $e->getMessage());
         }
 
-        $this->table =  DB_PREFIXE.get_called_class();
+        $this->table = DB_PREFIXE . get_called_class();
     }
 
 
@@ -25,23 +26,46 @@ class DB
         $columnsData = array_diff_key($propChild, $propDB);
         $columns = array_keys($columnsData);
 
-        
+
         if (!is_numeric($this->id)) {
-            
+
             //INSERT
-            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+            $sql = "INSERT INTO " . $this->table . " (" . implode(",", $columns) . ") VALUES (:" . implode(",:", $columns) . ");";
         } else {
 
             //UPDATE
             foreach ($columns as $column) {
-                $sqlUpdate[] = $column."=:".$column;
+                $sqlUpdate[] = $column . "=:" . $column;
             }
 
-            $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
+            $sql = "UPDATE " . $this->table . " SET " . implode(",", $sqlUpdate) . " WHERE id=:id;";
         }
 
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
+    }
+
+    public function populate($condition = [])
+    {
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE ";
+
+        $sql .= implode(' AND ', array_map(
+            function ($v, $k) {
+                return $k . "= :" . $k;
+            },
+            $condition,
+            array_keys($condition)
+        ));
+
+        $query = $this->pdo->prepare($sql);
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->execute($condition);
+
+        foreach ($query->fetch() as $key => $value) {
+            $setter = "set".ucfirst($key);
+            $this->{$setter}(trim($value));
+        }
     }
 }
