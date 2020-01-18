@@ -189,6 +189,29 @@ class users extends DB
         ];
     }
 
+    public static function getForgetPasswordForm() : array
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => helpers::getUrl("auth", "forgetpassword"),
+                "class" => "user",
+                "id" => "formLoginUser",
+                "submit" => "Se connecter"
+            ],
+            "fields" => [
+                "mail" => [
+                    "type" => "email",
+                    "placeholder" => "Votre email",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "errorMsg" => "Le format de votre email ne correspond pas",
+                ]
+            ]
+        ];
+    }
+
     /**
      * @return array
      */

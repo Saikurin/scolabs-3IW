@@ -10,6 +10,10 @@
   controller: auth
   action: login
 
+/auth/forget-password:
+  controller: auth
+  action: forgetpassword
+
 /dashboard:
   controller: dashboard
   action: index

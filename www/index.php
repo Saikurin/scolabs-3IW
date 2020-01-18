@@ -8,6 +8,7 @@ function myAutoloader($class)
     } elseif (file_exists("models/".$class.".model.php")) {
         include "models/".$class.".model.php";
     }
+    require ("vendor/autoload.php");
 }
 
 spl_autoload_register("myAutoloader");
