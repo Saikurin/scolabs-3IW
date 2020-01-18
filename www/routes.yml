@@ -5,6 +5,11 @@
 /auth/register:
   controller: auth
   action: register
+
 /auth/login:
   controller: auth
   action: login
+
+/dashboard:
+  controller: dashboard
+  action: index

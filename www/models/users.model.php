@@ -158,6 +158,37 @@ class users extends DB
         $this->registerDate = $register_date;
     }
 
+    public static function getLoginForm(): array
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => helpers::getUrl("auth", "login"),
+                "class" => "user",
+                "id" => "formLoginUser",
+                "submit" => "Se connecter"
+            ],
+            "fields" => [
+                "mail" => [
+                    "type" => "email",
+                    "placeholder" => "Votre email",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "errorMsg" => "Le format de votre email ne correspond pas",
+                ],
+                "password" => [
+                    "type" => "password",
+                    "placeholder" => "Votre mot de passe",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "errorMsg" => "Mot de passe incorrect"
+                ],
+            ]
+        ];
+    }
+
     /**
      * @return array
      */
@@ -221,6 +252,10 @@ class users extends DB
                     "class" => "form-control",
                     "id" => "",
                     "required" => true,
+                    "uniq" => [
+                        "table" => "users",
+                        "column" => "username",
+                    ],
                     "errorMsg" => "Le nom d'utilisateur est requis"
                 ],
                 "password" => [

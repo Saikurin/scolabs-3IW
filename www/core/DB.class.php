@@ -15,13 +15,16 @@ class DB
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      */
-    public function setId($id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * DB constructor.
+     */
     public function __construct()
     {
         //SINGLETON
@@ -33,6 +36,7 @@ class DB
 
         $this->table = DB_PREFIXE . get_called_class();
     }
+
 
 
     public function save()
@@ -67,7 +71,10 @@ class DB
         }
     }
 
-    public function populate($condition = [])
+    /**
+     * @param array $condition
+     */
+    public function populate(array $condition = []) : void
     {
 
         $sql = "SELECT * FROM " . $this->table . " WHERE ";
@@ -95,7 +102,10 @@ class DB
         }
     }
 
-    public function isPopulate()
+    /**
+     * @return bool
+     */
+    public function isPopulate() : bool
     {
         return is_int($this->id);
     }

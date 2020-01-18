@@ -29,6 +29,20 @@ class AuthController
 
     public function loginAction()
     {
+        $configFormUser = users::getLoginForm();
 
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $datas = $_POST;
+            $user = new users();
+            $user->populate(["mail" => $datas["mail"], "password" => $datas["password"]]);
+            if(is_int($user->getId())) {
+                $_SESSION["auth"]["logged"] = true;
+                $_SESSION["auth"]["username"] = $user->getUsername();
+                header("Location: " . helpers::getUrl("dashboard", "index"));
+            }
+        }
+
+        $View = new View("login", "account");
+        $View->assign("configFormUser", $configFormUser);
     }
 }
