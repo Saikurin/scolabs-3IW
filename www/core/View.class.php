@@ -45,6 +45,8 @@ class View
             die("Le modal n'existe pas!!!");
         }
 
+        $this->data  = $data;
+
         include "views/modals/".$modal.".mod.php";
     }
 

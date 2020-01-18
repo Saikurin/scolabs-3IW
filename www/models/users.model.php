@@ -8,19 +8,14 @@ declare(strict_types=1);
 class users extends DB
 {
     /**
-     * @var int
+     * @var string
      */
-    protected $user_id;
+    protected $lastname;
 
     /**
      * @var string
      */
-    protected $last_name;
-
-    /**
-     * @var string
-     */
-    protected $first_name;
+    protected $firstname;
 
     /**
      * @var string
@@ -45,54 +40,42 @@ class users extends DB
     /**
      * @var string
      */
-    protected $register_date;
+    protected $registerDate;
 
     /**
      * @return int
      */
-    public function getUserId(): int
+
+    /**
+     * @return string
+     */
+    public function getLastname(): string
     {
-        return $this->user_id;
+        return $this->lastname;
     }
 
     /**
-     * @param int $user_id
+     * @param string $lastname
      */
-    public function setUserId(int $user_id): void
+    public function setLastname(string $lastname): void
     {
-        $this->user_id = $user_id;
+        $this->lastname = $lastname;
     }
 
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getFirstname(): string
     {
-        return $this->last_name;
+        return $this->firstname;
     }
 
     /**
-     * @param string $last_name
+     * @param string $firstname
      */
-    public function setLastName(string $last_name): void
+    public function setFirstname(string $firstname): void
     {
-        $this->last_name = $last_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * @param string $first_name
-     */
-    public function setFirstName(string $first_name): void
-    {
-        $this->first_name = $first_name;
+        $this->firstname = $firstname;
     }
 
     /**
@@ -164,7 +147,7 @@ class users extends DB
      */
     public function getRegisterDate(): string
     {
-        return $this->register_date;
+        return $this->registerDate;
     }
 
     /**
@@ -172,9 +155,8 @@ class users extends DB
      */
     public function setRegisterDate(string $register_date): void
     {
-        $this->register_date = $register_date;
+        $this->registerDate = $register_date;
     }
-
 
     /**
      * @return array
@@ -184,7 +166,7 @@ class users extends DB
         return [
             "config" => [
                 "method" => "POST",
-                "action" => helpers::getUrl("user", "register"),
+                "action" => helpers::getUrl("auth", "register"),
                 "class" => "user",
                 "id" => "formRegisterUser",
                 "submit" => "S'inscrire"
@@ -221,14 +203,25 @@ class users extends DB
                     "max-length" => 45,
                     "errorMsg" => "La date de naissance doit être valide"
                 ],
-                "email" => [
+                "mail" => [
                     "type" => "email",
                     "placeholder" => "Votre email",
                     "class" => "form-control",
                     "id" => "",
                     "required" => true,
-                    "uniq" => ["table" => "users", "column" => "email"],
+                    "uniq" => [
+                        "table" => "users",
+                        "column" => "mail",
+                    ],
                     "errorMsg" => "Le format de votre email ne correspond pas"
+                ],
+                "username" => [
+                    "type" => "text",
+                    "placeholder" => "Votre nom d'utilisateur",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "errorMsg" => "Le nom d'utilisateur est requis"
                 ],
                 "password" => [
                     "type" => "password",
@@ -241,20 +234,12 @@ class users extends DB
                 "pwdConfirm" => [
                     "type" => "password",
                     "placeholder" => "Confirmation",
-                    "class" => "form-control form-control-user",
+                    "class" => "form-control",
                     "id" => "",
                     "required" => true,
-                    "confirmWith" => "pwd",
+                    "confirmWith" => "password",
                     "errorMsg" => "Votre mot de passe de confirmation ne correspond pas"
                 ],
-                "captcha" => [
-                    "type" => "captcha",
-                    "class" => "form-control form-control-user",
-                    "id" => "",
-                    "required" => true,
-                    "placeholder" => "Veuillez saisir les caractères",
-                    "errorMsg" => "Captcha incorrect"
-                ]
             ]
         ];
     }

@@ -2,8 +2,25 @@
 
 class DB
 {
+    private $id;
     private $table;
     private $pdo;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
 
     public function __construct()
     {
@@ -30,7 +47,7 @@ class DB
         if (!is_numeric($this->id)) {
 
             //INSERT
-            $sql = "INSERT INTO " . $this->table . " (" . implode(",", $columns) . ") VALUES (:" . implode(",:", $columns) . ");";
+            $sql = "INSERT INTO " . $this->table . " (" . implode(",", $columns) . ") VALUE (:" . implode(",:", $columns) . ");";
         } else {
 
             //UPDATE
@@ -43,7 +60,11 @@ class DB
 
 
         $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
+        try {
+            $queryPrepared->execute($columnsData);
+        }catch (PDOException $exception) {
+            die($exception->getMessage());
+        }
     }
 
     public function populate($condition = [])
@@ -63,9 +84,19 @@ class DB
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute($condition);
 
-        foreach ($query->fetch() as $key => $value) {
-            $setter = "set".ucfirst($key);
-            $this->{$setter}(trim($value));
+
+        $datas = $query->fetch();
+
+        if($query->rowCount() > 0) {
+            foreach ($datas as $key => $value) {
+                $setter = "set".ucfirst($key);
+                $this->{$setter}(trim($value));
+            }
         }
+    }
+
+    public function isPopulate()
+    {
+        return is_int($this->id);
     }
 }
