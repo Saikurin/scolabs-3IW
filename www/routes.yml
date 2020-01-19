@@ -14,6 +14,10 @@
   controller: auth
   action: forgetpassword
 
+/auth/reset-password:
+  controller: auth
+  action: resetpassword
+
 /dashboard:
   controller: dashboard
   action: index

@@ -8,6 +8,10 @@ declare(strict_types=1);
 class users extends DB
 {
     /**
+     * @var int
+     */
+    protected $id;
+    /**
      * @var string
      */
     protected $lastname;
@@ -40,11 +44,28 @@ class users extends DB
     /**
      * @var string
      */
+    protected $token;
+
+    /**
+     * @var string
+     */
     protected $registerDate;
 
     /**
      * @return int
      */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string
@@ -145,6 +166,22 @@ class users extends DB
     /**
      * @return string
      */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
     public function getRegisterDate(): string
     {
         return $this->registerDate;
@@ -158,6 +195,44 @@ class users extends DB
         $this->registerDate = $register_date;
     }
 
+    /**
+     * @return array
+     */
+    public static function getResetPasswordForm(): array
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => helpers::getUrl("auth", "resetpassword"),
+                "class" => "user",
+                "id" => "formLoginUser",
+                "submit" => "Réinitialiser"
+            ],
+            "fields" => [
+                "password" => [
+                    "type" => "password",
+                    "placeholder" => "Votre mot de passe",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "errorMsg" => "Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                ],
+                "pwdConfirm" => [
+                    "type" => "password",
+                    "placeholder" => "Confirmation",
+                    "class" => "form-control",
+                    "id" => "",
+                    "required" => true,
+                    "confirmWith" => "password",
+                    "errorMsg" => "Votre mot de passe de confirmation ne correspond pas"
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public static function getLoginForm(): array
     {
         return [
@@ -189,7 +264,10 @@ class users extends DB
         ];
     }
 
-    public static function getForgetPasswordForm() : array
+    /**
+     * @return array
+     */
+    public static function getForgetPasswordForm(): array
     {
         return [
             "config" => [
@@ -207,7 +285,7 @@ class users extends DB
                     "id" => "",
                     "required" => true,
                     "errorMsg" => "Le format de votre email ne correspond pas",
-                ]
+                ],
             ]
         ];
     }

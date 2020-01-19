@@ -75,8 +75,19 @@ class AuthController
 
                     $mail->isHTML(true);
                     $mail->Subject = 'Scolabs : Mot de passe oublié';
-                    $mail->Body = '<p>Bonjour</p></p><p>Afin de réinitialiser votre mot de passe merci de cliquer sur le lien ci-dessous :</p><a href="" style="text-align: center">ICI</a>';
+                    $token = md5(time());
 
+                    $url = (helpers::isHttps()) ? "https://" : "http://";
+                    $url .= $_SERVER["HTTP_HOST"] . ":" . $_SERVER["SERVER_PORT"] . "/auth/reset-password?token=" . $token . "&mail=" . md5($user->getMail());
+
+                    $mail->Body = '
+                            <p>Bonjour</p>
+                            <p>Afin de réinitialiser votre mot de passe merci de cliquer sur le lien ci-dessous :</p>
+                            <a href="' . $url . '">ICI</a>
+                            <p>Sinon copiez-coller l\'url suivant : ' . $url . '</p>
+                            ';
+                    $user->setToken($token);
+                    $user->save();
                     $mail->send();
                 } catch (\PHPMailer\PHPMailer\Exception $exception) {
                     die($exception->getMessage());
@@ -87,5 +98,39 @@ class AuthController
 
         $View = new View("forgotPwd", "account");
         $View->assign("configForm", $configForm);
+    }
+
+    public function resetpasswordAction()
+    {
+        $configFormReset = users::getResetPasswordForm();
+        $user = new users();
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+            $errors = Validator::checkForm($configFormReset, $_POST);
+
+            if (count($errors) === 0) {
+                $user->populate(["token" => $_SESSION["token"]]);
+                $user->setPassword(md5($_POST["password"]));
+                $user->setToken("");
+                unset($_SESSION["token"]);
+                $user->save();
+            }
+        } else {
+            $_SESSION["token"] = $_GET["token"];
+            $user->populate(["token" => $_SESSION["token"]]);
+
+            if ($user->isPopulate()) {
+                $mail = $_GET["mail"];
+                if (md5($user->getMail()) === $mail) {
+
+                    $View = new View("resetPwd", "account");
+                    $View->assign("configFormReset", $configFormReset);
+                }
+            } else {
+                // Todo: Where can we redirect the user
+                header("Location: " . helpers::getUrl("default", "default"));
+            }
+        }
     }
 }

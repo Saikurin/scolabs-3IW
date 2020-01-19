@@ -21,7 +21,7 @@ new ConstantLoader();
 //http://localhost/user -> $c = user et $a default
 //http://localhost -> $c = default et $a default
 
-$uri = $_SERVER["REQUEST_URI"];
+$uri = strtok($_SERVER["REQUEST_URI"], "?");
 
 
 $listOfRoutes = yaml_parse_file("routes.yml");

@@ -2,25 +2,9 @@
 
 class DB
 {
-    private $id;
     private $table;
     private $pdo;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
 
     /**
      * DB constructor.
