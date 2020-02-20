@@ -23,6 +23,7 @@ class AuthController
                 $user->setRegisterDate(date("Y-m-d H:i:s"));
                 $user->save();
             }
+            echo '<pre>' . print_r($errors) . '</pre>';
         }
 
         $View = new View("register", "account");

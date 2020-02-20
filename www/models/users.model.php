@@ -313,7 +313,7 @@ class users extends DB
                     "required" => true,
                     "min-length" => 2,
                     "max-length" => 45,
-                    "errorMsg" => "Votre nom de famille doit faire entre 2 et 45 caractères"
+                    "errorMsg" => "Votre nom de famille doit faire entre 2 et 45 caractères et ne pas commencer par un caractère spécial"
                 ],
                 "first_name" => [
                     "type" => "text",
@@ -331,8 +331,6 @@ class users extends DB
                     "class" => "form-control",
                     "id" => "",
                     "required" => true,
-                    "min-length" => 2,
-                    "max-length" => 45,
                     "errorMsg" => "La date de naissance doit être valide"
                 ],
                 "mail" => [
