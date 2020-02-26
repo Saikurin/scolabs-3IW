@@ -6,7 +6,6 @@ class QueryBuilder extends DB
     private $query;
     private $table;
     private $where = "";
-    private $set = "";
     private $order = "";
     private $limit = "";
     private $groupBy = "";
@@ -16,6 +15,12 @@ class QueryBuilder extends DB
     {
         parent::__construct();
     }
+
+    /**
+     * function select
+     * @param columns array or string
+     * @return QueryBuilder
+     */
 
     public function select($columns)
     {
@@ -39,11 +44,23 @@ class QueryBuilder extends DB
         return $this;
     }
 
+    /**
+     * function update
+     * @param table string
+     * @return QueryBuilder
+     */
+
     public function update($table)
     {
         $this->selector .= "UPDATE " . $table . " ";
         return $this;
     }
+
+    /**
+     * function findAll
+     * @param table string
+     * @return QueryBuilder
+     */
 
     public function findAll($table)
     {
@@ -53,6 +70,12 @@ class QueryBuilder extends DB
         return $this;
     }
 
+    /**
+     * function count
+     * @param table string
+     * @return QueryBuilder
+     */
+
     public function count($table)
     {
         $this->selector = "SELECT COUNT(*)";
@@ -60,6 +83,14 @@ class QueryBuilder extends DB
 
         return $this;
     }
+
+    /**
+     * function where
+     * @param column string
+     * @param operator string
+     * @param value string default null
+     * @return QueryBuilder
+     */
 
     public function where($column, $operator, $value = null)
     {
@@ -71,17 +102,25 @@ class QueryBuilder extends DB
         return $this;
     }
 
+    /**
+     * function like
+     * @param column string
+     * @param value string default null
+     * @return QueryBuilder
+     */
+
     public function like($column, $value = null)
     {
         $this->where .= " " . $column . " LIKE CONCAT('%',:" . $value . ",'%') ";
         return $this;
     }
 
-    public function set($values)
-    {
-        $this->set .= " " . $values . " ";
-        return $this;
-    }
+    /**
+     * function orderBy
+     * @param column string$
+     * @param order stirng
+     * @return QueryBuilder
+     */
 
     public function orderBy($column, $order)
     {
@@ -89,17 +128,34 @@ class QueryBuilder extends DB
         return $this;
     }
 
+    /**
+     * function groupBy
+     * @param group string
+     * @return QueryBuilder
+     */
+
     public function groupBy($group)
     {
         $this->groupBy .= " " . $group . " ";
         return $this;
     }
 
+    /**
+     * function limit
+     * @param limit string
+     * @return QueryBuilder
+     */
+
     public function limit($limit)
     {
         $this->limit .= " ".$limit." ";
         return $this;
     }
+
+    /**
+     * function get
+     * @return array
+     */
 
     public function get()
     {
