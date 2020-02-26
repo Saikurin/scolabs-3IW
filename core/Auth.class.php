@@ -27,11 +27,11 @@ class Auth
 
     public static function isAdmin()
     {
-        return (Auth::isAuth() && $_SESSION['user']['role'] == 'ADMIN');
+        return (self::isAuth() && $_SESSION['user']['role'] == 'ADMIN');
     }
 
     public static function isModerator()
     {
-        return (Auth::isAuth() && $_SESSION['user']['role'] == 'MODERATOR');
+        return (self::isAuth() && $_SESSION['user']['role'] == 'MODERATOR');
     }
 }
