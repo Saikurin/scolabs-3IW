@@ -22,7 +22,7 @@ class Mailer
         if (Validator::checkEmail($fromEmail) && Validator::checkEmail($to)) {
             if (!empty($fromName)) {
                 // TODO: Change true to false in production
-                $mailer = self::getPHPMailer(true);
+                $mailer = self::getPHPMailer(MAILER_DEBUG);
                 $mailer->CharSet = 'UTF-8';
 
                 $mailer->setFrom($fromEmail, $fromName);
@@ -56,7 +56,7 @@ class Mailer
         $mail = new PHPMailer($debug);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->SMTPDebug =  ($debug) ? SMTP::DEBUG_OFF : SMTP::DEBUG_SERVER;
             $mail->isSMTP();
             $mail->Host = MAILER_URL;
             $mail->SMTPAuth = true;
