@@ -3,6 +3,7 @@
     "description": "CMS to manage school",
     "license": "Academic Free Licence V3.0",
     "require": {
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpmailer/phpmailer": "^6.1"
     }
 }
