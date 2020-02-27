@@ -13,28 +13,28 @@ class Mailer
      * @param string $subject
      * @param string $content
      * @param bool $isHTML
+     * @param array $attachments
      * @return bool
      * @throws PHPMailerException
      */
-    public static function sendMail(string $to, string $fromEmail, string $fromName, string $subject, string $content, bool $isHTML)
+    public static function sendMail(string $to, string $fromEmail, string $fromName, string $subject, string $content, bool $isHTML, array $attachments = [])
     {
-
         if (Validator::checkEmail($fromEmail) && Validator::checkEmail($to)) {
             if (!empty($fromName)) {
                 // TODO: Change true to false in production
                 $mailer = self::getPHPMailer(true);
                 $mailer->CharSet = 'UTF-8';
 
-                $mailer->setFrom($fromEmail,$fromName);
+                $mailer->setFrom($fromEmail, $fromName);
                 $mailer->addAddress($to);
 
                 $mailer->isHTML($isHTML);
                 $mailer->Subject = $subject;
 
-                if($isHTML) {
-                    $mailer->Body = $content;
-                } else {
-                    $mailer->AltBody = $content;
+                $mailer->Body = $content;
+
+                foreach ($attachments as $attachment) {
+                    $mailer->addAttachment($attachment);
                 }
 
                 $mailer->send();
