@@ -2,14 +2,31 @@
 
 class QueryBuilder extends DB
 {
-    // TO DO -> JOIN
+    // TO DO -> JOIN, DELETE, SAVE
+    /**
+     * @var string
+     */
     private $query;
+    /**
+     * @var string
+     */
     private $table;
+    /**
+     * @var string default nulll
+     */
     private $where = "";
+    /**
+     * @var string default null
+     */
     private $order = "";
+    /**
+     * @var string default null
+     */
     private $limit = "";
+    /**
+     * @var string default null
+     */
     private $groupBy = "";
-    private $parameters = [];
 
     public function __construct()
     {
