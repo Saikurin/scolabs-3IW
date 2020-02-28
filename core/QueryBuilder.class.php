@@ -104,7 +104,7 @@ class QueryBuilder extends DB
             $operator = "=";
         }
         $this->where .= " " . $column . " " . $operator;
-        $this->where .= (is_int($value)) ? " " . $value : "'".$value."'";
+        $this->where .= (is_int($value)) ? " " . $value : " '".$value."'";
         return $this;
     }
 
@@ -160,7 +160,7 @@ class QueryBuilder extends DB
         } else {
             $this->query =
                 $this->selector
-                . " FROM " . $this->table
+                . " FROM " . $this->table . " "
                 . (!empty($this->where) ? "WHERE" . $this->where : "")
                 . (!empty($this->groupBy) ? "GROUP BY" . $this->groupBy : "")
                 . (!empty($this->order) ? "ORDER BY" . $this->order : "")
