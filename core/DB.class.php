@@ -8,11 +8,11 @@ class DB
     /**
      * @var string
      */
-    private $table;
+    protected $table;
     /**
      * @var PDO
      */
-    private $pdo;
+    protected $pdo;
 
     /**
      * DB constructor.
