@@ -6,70 +6,103 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class Mailer
 {
+
+    const HIGH_PRIORITY = 1;
+    const NORMAL_PRIORITY = 3;
+    const LOW_PRIORITY = 5;
+
     /**
-     * @param string $to
-     * @param string $fromEmail
-     * @param string $fromName
-     * @param string $subject
-     * @param string $content
-     * @param bool $isHTML
-     * @param array $attachments
-     * @return bool
-     * @throws PHPMailerException
+     * @var PHPMailer|null
      */
-    public static function sendMail(string $to, string $fromEmail, string $fromName, string $subject, string $content, bool $isHTML, array $attachments = [])
+    private $mailer;
+
+    /**
+     * Mailer constructor.
+     */
+    public function __construct()
     {
-        if (Validator::checkEmail($fromEmail) && Validator::checkEmail($to)) {
-            if (!empty($fromName)) {
-                // TODO: Change true to false in production
-                $mailer = self::getPHPMailer(MAILER_DEBUG);
-                $mailer->CharSet = 'UTF-8';
-
-                $mailer->setFrom($fromEmail, $fromName);
-                $mailer->addAddress($to);
-
-                $mailer->isHTML($isHTML);
-                $mailer->Subject = $subject;
-
-                $mailer->Body = $content;
-
-                foreach ($attachments as $attachment) {
-                    $mailer->addAttachment($attachment);
-                }
-
-                $mailer->send();
-                return true;
-            } else {
-                throw WarningException::warningError("Les noms ne respectent pas le format demandé");
-            }
-        } else {
-            throw WarningException::warningError("Les adresses emails renseignés pour l'envoie du mail ne sont pas valide");
+        $this->mailer = new PHPMailer(MAILER_DEBUG);
+        try {
+            //Server settings
+            $this->mailer->SMTPDebug = MAILER_DEBUG ? SMTP::DEBUG_OFF : SMTP::DEBUG_SERVER;
+            $this->mailer->CharSet = 'UTF-8';
+            $this->mailer->Encoding = 'base64';
+            $this->mailer->isSMTP();
+            $this->mailer->Host = MAILER_URL;
+            $this->mailer->SMTPAuth = true;
+            $this->mailer->Username = MAILER_USERNAME;
+            $this->mailer->Password = MAILER_PASSWORD;
+            $this->mailer->SMTPSecure = MAILER_SECURE;
+            $this->mailer->Port = MAILER_PORT;
+        } catch (Exception $e) {
+            DangerException::smtpFailure();
         }
     }
 
     /**
-     * @param bool $debug
-     * @return PHPMailer|null
+     * @param string $template
+     * @param array $datas
+     * @return void
      */
-    public static function getPHPMailer(bool $debug)
+    public function withTemplate(string $template, array $datas)
     {
-        $mail = new PHPMailer($debug);
-        try {
-            //Server settings
-            $mail->SMTPDebug =  ($debug) ? SMTP::DEBUG_OFF : SMTP::DEBUG_SERVER;
-            $mail->isSMTP();
-            $mail->Host = MAILER_URL;
-            $mail->SMTPAuth = true;
-            $mail->Username = MAILER_USERNAME;
-            $mail->Password = MAILER_PASSWORD;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = MAILER_PORT;
-
-            return $mail;
-        } catch (Exception $e) {
-            DangerException::smtpFailure();
+        if (file_exists("views/templates/mailer/" . $template . ".tpl.php")) {
+            extract($datas);
+            ob_start();
+            include "views/templates/mailer/" . $template . ".tpl.php";
+            $content = ob_get_clean();
+        } else {
+            $content = "";
+            WarningException::warningError("Le fichier de template n'existe pas", 404);
         }
 
-        return null;
+        $this->mailer->isHTML(true);
+
+        $this->mailer->Body = $content;
+    }
+
+    /**
+     * @param array $attachments
+     * @throws PHPMailerException
+     */
+    public function addAttachments(array $attachments)
+    {
+        foreach ($attachments as $attachment) {
+            $this->mailer->addAttachment($attachment);
+        }
+    }
+
+    /**
+     * @param string $fromAndReply
+     * @param string $subject
+     * @param array $to
+     * @param array $cc
+     * @param array $cci
+     * @param int $priority
+     * @return bool
+     * @throws PHPMailerException
+     */
+    public function send(string $fromAndReply, string $subject, array $to, array $cc = [], array $cci = [], int $priority = self::NORMAL_PRIORITY)
+    {
+        $this->mailer->Priority = $priority;
+
+        $this->mailer->setFrom($fromAndReply);
+        $this->mailer->addReplyTo($fromAndReply);
+
+        foreach ($to as $item) {
+            $this->mailer->addAddress($item);
+        }
+
+        foreach ($cc as $item) {
+            $this->mailer->addCC($item);
+        }
+
+        foreach ($cci as $item) {
+            $this->mailer->addBCC($item);
+        }
+
+        $this->mailer->Subject = $subject;
+
+        return $this->mailer->send();
     }
 }
