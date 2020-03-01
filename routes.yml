@@ -1,0 +1,6 @@
+/classrooms:
+  controller: Classrooms
+  action: index
+/add-classroom:
+  controller: Classrooms
+  action: add
