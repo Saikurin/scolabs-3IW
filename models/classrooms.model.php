@@ -47,7 +47,7 @@ class classrooms extends QueryBuilder
      */
     public function setName(string $name)
     {
-        if(strlen($name) <= 45) {
+        if (strlen($name) <= 45) {
             $this->name = $name;
         } else {
             DangerException::fatalError("Le nom ne doit pas dépasser 45 caractères");
@@ -67,12 +67,44 @@ class classrooms extends QueryBuilder
      */
     public function setLevel(string $level)
     {
-        if(strlen($level) <= 45) {
+        if (strlen($level) <= 45) {
             $this->level = $level;
         } else {
             DangerException::fatalError("Le niveau ne doit pas dépasser 45 caractères");
         }
     }
 
+    public static function getNewEntityForm()
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => helpers::getUrl("Classrooms", "add"),
+                "class" => "",
+                "id" => "",
+                "submit" => "Ajouter une classe"
+            ],
+            "fields" => [
+                "name" => [
+                    "type" => "text",
+                    "required" => true,
+                    "placeholder" => "Nom de la classe",
+                    "class" => "",
+                    "id" => "",
+                    "maxlength" => 45,
+                    "errMsg" => "Le nom ne doit pas dépasser 45 caractères"
+                ],
+                "level" => [
+                    "type" => "text",
+                    "required" => true,
+                    "placeholder" => "Niveau de la classe (3ème, 4ème ...)",
+                    "class" => "",
+                    "id" => "",
+                    "maxlength" => 45,
+                    "errMsg" => "Le nom ne doit pas dépasser 45 caractères"
+                ]
+            ]
+        ];
+    }
 
 }
