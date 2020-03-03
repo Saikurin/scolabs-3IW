@@ -8,13 +8,14 @@
     </tr>
     </thead>
     <tbody>
-        <?php foreach ($classrooms as $classroom): ?>
-            <tr>
-                <td><?= $classroom['id'] ?></td>
-                <td><?= $classroom['name'] ?></td>
-                <td><?= $classroom['level'] ?></td>
-            </tr>
-        <?php endforeach; ?>
+    <?php foreach ($classrooms as $classroom): ?>
+        <tr>
+            <td><?= $classroom['id'] ?></td>
+            <td><?= $classroom['name'] ?></td>
+            <td><?= $classroom['level'] ?></td>
+            <td><a href="<?= helpers::getUrl("Classrooms", "edit", [$classroom["name"]]) ?>">Modifier</a></td>
+        </tr>
+    <?php endforeach; ?>
     </tbody>
 </table>
 

@@ -4,3 +4,7 @@
 /add-classroom:
   controller: Classrooms
   action: add
+/classrooms/{name}/edit:
+  controller: Classrooms
+  action: edit
+  params: name
