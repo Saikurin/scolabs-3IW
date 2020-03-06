@@ -1,10 +1,18 @@
 /classrooms:
   controller: Classrooms
   action: index
+  method:
+    - GET
 /add-classroom:
   controller: Classrooms
   action: add
-/classrooms/{name}/edit:
+  method:
+    - GET
+/classrooms/:name/edit:
   controller: Classrooms
   action: edit
-  params: name
+  params:
+    - name: '[A-Za-z0-0]+'
+  method:
+    - GET
+    - POST

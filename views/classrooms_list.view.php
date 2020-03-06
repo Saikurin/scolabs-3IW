@@ -1,4 +1,6 @@
+<!--
 <a href="<?= helpers::getUrl("Classrooms", "add") ?>">Ajouter une classe</a>
+ -->
 <table id="myTable">
     <thead>
     <tr>
@@ -13,7 +15,7 @@
             <td><?= $classroom['id'] ?></td>
             <td><?= $classroom['name'] ?></td>
             <td><?= $classroom['level'] ?></td>
-            <td><a href="<?= helpers::getUrl("Classrooms", "edit", [$classroom["name"]]) ?>">Modifier</a></td>
+            <td><a href="<?= helpers::getUrl("Classrooms", "edit", ["name" => $classroom['name']]) ?>">Modifier</a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
