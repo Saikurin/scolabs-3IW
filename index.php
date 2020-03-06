@@ -7,6 +7,10 @@ function myAutoloader($class)
         include "core/" . $class . ".class.php";
     } elseif (file_exists("models/" . $class . ".model.php")) {
         include "models/" . $class . ".model.php";
+    } elseif (file_exists("views/js/" . $class . ".js")) {
+        include "views/js/" . $class . ".js";
+    } elseif (file_exists("views/css/" . $class . ".css")) {
+        include "views/css/" . $class . ".css";
     }
 }
 
