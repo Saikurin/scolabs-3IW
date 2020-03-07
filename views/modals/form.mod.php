@@ -17,13 +17,20 @@
                 <?php endif; ?>
 
                 <input
-                        value="<?= (isset($inputData[$name]) && $configField["type"] != "password") ? $inputData[$name] : '' ?>"
+                        value="<?php
+                        if ((isset($inputData[$name]) && $configField["type"] != "password")) {
+                            echo $inputData[$name];
+                        } else {
+                            if (!empty($this->values[$name])) {
+                                echo $this->values[$name];
+                            }
+                        } ?>"
                         type="<?= $configField["type"] ?? '' ?>"
                         name="<?= $name ?? '' ?>"
                         placeholder="<?= $configField["placeholder"] ?? '' ?>"
                         class="<?= $configField["class"] ?? '' ?>"
                         id="<?= $configField["id"] ?? '' ?>"
-                        <?= (!empty($configField["required"])) ? "required='required'" : "" ?>>
+                    <?= (!empty($configField["required"])) ? "required='required'" : "" ?>>
             </div>
         </div>
     <?php endforeach; ?>

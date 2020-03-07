@@ -74,6 +74,44 @@ class classrooms extends QueryBuilder
         }
     }
 
+    /**
+     * @param array $datas
+     * @return array
+     */
+    public static function getEditEntityForm(array $datas)
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => helpers::getUrl("Classrooms", "update", ['id' => $datas['id']]),
+                "class" => "",
+                "id" => "",
+                "submit" => "Modifier la classe"
+            ],
+            "fields" => [
+                "name" => [
+                    "type" => "text",
+                    "required" => true,
+                    "placeholder" => "Nom de la classe",
+                    "class" => "",
+                    "id" => "",
+                    "maxlength" => 45,
+                    "errMsg" => "Le nom ne doit pas dépasser 45 caractères",
+                ],
+                "level" => [
+                    "type" => "text",
+                    "required" => true,
+                    "placeholder" => "Niveau de la classe (3ème, 4ème ...)",
+                    "class" => "",
+                    "id" => "",
+                    "maxlength" => 45,
+                    "errMsg" => "Le nom ne doit pas dépasser 45 caractères"
+                ]
+            ]
+        ];
+
+    }
+
     public static function getNewEntityForm()
     {
         return [

@@ -18,6 +18,10 @@ class View
      */
     private $data = [];
 
+    /**
+     * @var array
+     */
+    private $values = [];
 
     /**
      * View constructor.
@@ -69,14 +73,16 @@ class View
     /**
      * @param string $modal
      * @param array $data
+     * @param array $values
      */
-    public function addModal(string $modal, array $data)
+    public function addModal(string $modal, array $data, array $values = [])
     {
         if (!file_exists("views/modals/" . $modal . ".mod.php")) {
             die("Le modal n'existe pas!!!");
         }
 
         $this->data = $data;
+        $this->values = $values;
 
         include "views/modals/" . $modal . ".mod.php";
     }

@@ -12,7 +12,21 @@
   controller: Classrooms
   action: edit
   params:
-    - name: '[A-Za-z0-0]+'
+    - name: '[A-Za-z0-9]+'
   method:
     - GET
     - POST
+/classrooms/:id/update:
+  controller: Classrooms
+  action: update
+  params:
+    - id: '[0-9]+'
+  method:
+    - POST
+/classrooms/:id/delete:
+  controller: Classrooms
+  action: delete
+  params:
+    - id: '[0-9]+'
+  method:
+    - GET
