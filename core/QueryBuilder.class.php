@@ -198,8 +198,34 @@ class QueryBuilder extends DB
         }
 
         $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
+        return $queryPrepared->execute($columnsData);
     }
+
+    public function delete($column, $comp, $val = null){
+        if (!isset($this->table)) {
+            return false;
+        } else {
+            $this->query =
+                "DELETE FROM " . $this->table . " "
+                . "WHERE " . 
+                $column . " " . 
+                ($val !== null ? $comp . " " . $val: "= " . $comp) ;
+            var_dump($this->query);
+            $query = $this->pdo->prepare($this->query);
+            return $query->execute();
+        }
+    }
+
+    public function deleteAll(){
+        if(!isset($this->table)){
+            return false;
+        } else {
+            $this->query = "DELETE FROM " . $this->table;
+        }
+        $query = $this->pdo->prepare($this->query);
+        return $query->execute();
+    }
+
 
     /**
      * @return $this
