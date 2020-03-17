@@ -14,6 +14,10 @@ class View
      */
     private $view;
     /**
+     * @var string
+     */
+    private $underfile;
+    /**
      * @var array -
      */
     private $data = [];
@@ -27,7 +31,14 @@ class View
     public function __construct($view, $template = "back")
     {
         $this->setTemplate($template);
-        $this->setView($view);
+
+        if (strpos($view, ".")){
+            $view = explode(".", $view);
+            $this->underfile = $view[1];
+            $this->view = $view[0];
+        } else {
+            $this->setView($view);
+        }
     }
 
     /**
@@ -51,7 +62,7 @@ class View
     {
         $this->view = strtolower(trim($view));
 
-        if (!file_exists("views/" . $this->view . ".view.php")) {
+        if (!file_exists("views/" . $this->view . "/" . $this->view . ".view.php")) {
             die("La vue n'existe pas");
         }
     }
@@ -81,7 +92,25 @@ class View
         include "views/modals/" . $modal . ".mod.php";
     }
 
-
+    public function loadStyles()
+    {
+        if (isset($this->underfile)) {
+            if (file_exists("views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".js")) {
+                echo "<script src='views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".js'></script>";
+            }
+            if (file_exists("views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".css")) {
+                echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".css'>";
+            }
+        } else {
+            if (file_exists("views/" . $this->view . "/" . $this->view . ".js")) {
+                echo "<script src='views/" . $this->view . "/" . $this->view . ".js'></script>";
+            }
+            if (file_exists("views/" . $this->view . "/" . $this->view . ".css")) {
+                echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->view . ".css'>";
+            }
+        }
+        echo $this->underfile;
+    }
     /**
      * @return void
      */

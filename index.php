@@ -10,7 +10,7 @@ function myAutoloader($class)
     } elseif (file_exists("exceptions/" . $class . ".exception.php")) {
         include "exceptions/" . $class . ".exception.php";
     }
-}
+ }
 
 spl_autoload_register("myAutoloader");
 
