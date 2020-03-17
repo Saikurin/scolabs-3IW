@@ -3,6 +3,7 @@ session_start();
 
 function myAutoloader($class)
 {
+    require("vendor/autoload.php");
     if (file_exists("core/" . $class . ".class.php")) {
         include "core/" . $class . ".class.php";
     } elseif (file_exists("models/" . $class . ".model.php")) {
