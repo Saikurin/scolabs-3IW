@@ -209,8 +209,7 @@ class QueryBuilder extends DB
                 "DELETE FROM " . $this->table . " "
                 . "WHERE " . 
                 $column . " " . 
-                ($val !== null ? $comp . " " . $val: "= " . $comp) ;
-            var_dump($this->query);
+                ($val !== null) ? $comp . " " . $val: "= " . $comp ;
             $query = $this->pdo->prepare($this->query);
             return $query->execute();
         }
