@@ -28,6 +28,16 @@ class View
     private $values = [];
 
     /**
+     * @var array
+     */
+    private $jsFiles = [];
+
+    /**
+     * @var array
+     */
+    private $cssFiles = [];
+
+    /**
      * View constructor.
      * @param $view
      * @param string $template
@@ -36,7 +46,7 @@ class View
     {
         $this->setTemplate($template);
 
-        if (strpos($view, ".")){
+        if (strpos($view, ".")) {
             $view = explode(".", $view);
             $this->underfile = $view[1];
             $this->view = $view[0];
@@ -98,25 +108,41 @@ class View
         include "views/modals/" . $modal . ".mod.php";
     }
 
+    /**
+     * @param string $file
+     */
+    public function addJS(string $file)
+    {
+        $this->jsFiles[] = $file;
+    }
+
+    /**
+     * @param string $file
+     */
+    public function addCSS(string $file)
+    {
+        $this->cssFiles[] = $file;
+    }
+
     public function loadStyles()
     {
-        if (isset($this->underfile)) {
-            if (file_exists("views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".js")) {
-                echo "<script src='views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".js'></script>";
-            }
-            if (file_exists("views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".css")) {
-                echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->view . "/" . $this->underfile . ".css'>";
-            }
-        } else {
-            if (file_exists("views/" . $this->view . "/" . $this->view . ".js")) {
-                echo "<script src='views/" . $this->view . "/" . $this->view . ".js'></script>";
-            }
-            if (file_exists("views/" . $this->view . "/" . $this->view . ".css")) {
-                echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->view . ".css'>";
-            }
+        foreach ($this->cssFiles as $cssFile) {
+            echo "<link rel='stylesheet' type='text/css' href='public/css/" . $cssFile . "'/>";
         }
-        echo $this->underfile;
+        
+        if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css")) {
+            echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css'>";
+        }
+
+        foreach ($this->jsFiles as $jsFile) {
+            echo "<script src='public/js/" . $jsFile . "'></script>";
+        }
+
+        if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js")) {
+            echo "<script src='views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js'></script>";
+        }
     }
+
     /**
      * @return void
      */
