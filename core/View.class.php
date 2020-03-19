@@ -38,6 +38,16 @@ class View
     private $cssFiles = [];
 
     /**
+     * @var array
+     */
+    private $linksCSS = [];
+
+    /**
+     * @var array
+     */
+    private $linksJS = [];
+
+    /**
      * View constructor.
      * @param $view
      * @param string $template
@@ -124,18 +134,36 @@ class View
         $this->cssFiles[] = $file;
     }
 
+    public function addLinkCSS(string $link)
+    {
+        $this->linksCSS[] = $link;
+    }
+
+    public function addLinkJS(string $link)
+    {
+        $this->linksJS[] = $link;
+    }
+
     public function loadStyles()
     {
         foreach ($this->cssFiles as $cssFile) {
             echo "<link rel='stylesheet' type='text/css' href='public/css/" . $cssFile . "'/>";
         }
-        
+
+        foreach ($this->linksCSS as $link) {
+            echo "<link rel='stylesheet' type='text/css' href='" . $link . "'/>";
+        }
+
         if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css")) {
             echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css'>";
         }
 
         foreach ($this->jsFiles as $jsFile) {
             echo "<script src='public/js/" . $jsFile . "'></script>";
+        }
+
+        foreach ($this->linksJS as $links) {
+            echo "<script src=" . $link . "'></script>";
         }
 
         if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js")) {
