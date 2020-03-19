@@ -6,7 +6,12 @@ class ClassroomsController
     {
         $classroomsEntity = new classrooms();
 
-        $view = new View("classrooms_list", "admin");
+        $view = new View("classrooms.list", "admin");
+
+        $view->addJS("jquery.dataTables.min.js");
+        $view->addLinkJS("https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js");
+        $view->addCSS('jquery.dataTables.min.css');
+
         $view->assign("classrooms", $classroomsEntity->select('*')->get());
     }
 
