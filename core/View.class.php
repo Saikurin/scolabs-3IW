@@ -162,8 +162,8 @@ class View
             echo "<script src='public/js/" . $jsFile . "'></script>";
         }
 
-        foreach ($this->linksJS as $links) {
-            echo "<script src=" . $link . "'></script>";
+        foreach ($this->linksJS as $link) {
+            echo "<script src='" . $link . "'></script>";
         }
 
         if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js")) {
