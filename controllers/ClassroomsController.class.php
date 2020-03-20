@@ -20,7 +20,7 @@ class ClassroomsController
      */
     public function editAction(string $name)
     {
-        $view = new View('classrooms_edit', 'admin');
+        $view = new View('classrooms.edit', 'admin');
 
         $classroomEntity = new classrooms();
         $classroomEntity->select('*')->where('name', '=', $name);

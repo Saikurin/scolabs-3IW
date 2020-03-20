@@ -12,7 +12,7 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
-    <link rel="stylesheet" href="public/css/scotrap.css">
+    <link rel="stylesheet" href="<?= $_SERVER["REQUEST_SCHEME"] ?>://<?= $_SERVER["HTTP_HOST"] ?>/public/css/scotrap.css">
 
     <?php $this->loadStyles(); ?>
 </head>
