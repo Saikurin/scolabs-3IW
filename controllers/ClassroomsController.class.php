@@ -56,7 +56,7 @@ class ClassroomsController
 
     public function addAction()
     {
-        $view = new View("classrooms_add", "admin");
+        $view = new View("classrooms.add", "admin");
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors = Validator::checkForm(classrooms::getNewEntityForm(), $_POST);
             if (count($errors) === 0) {
