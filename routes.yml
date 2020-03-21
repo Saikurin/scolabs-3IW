@@ -1,0 +1,32 @@
+/classrooms:
+  controller: Classrooms
+  action: index
+  method:
+    - GET
+/add-classroom:
+  controller: Classrooms
+  action: add
+  method:
+    - GET
+/classrooms/:name/edit:
+  controller: Classrooms
+  action: edit
+  params:
+    - name: '[A-Za-z0-9]+'
+  method:
+    - GET
+    - POST
+/classrooms/:id/update:
+  controller: Classrooms
+  action: update
+  params:
+    - id: '[0-9]+'
+  method:
+    - POST
+/classrooms/:id/delete:
+  controller: Classrooms
+  action: delete
+  params:
+    - id: '[0-9]+'
+  method:
+    - GET

@@ -8,11 +8,7 @@ class QueryBuilder extends DB
      */
     private $query;
     /**
-     * @var string
-     */
-    private $table;
-    /**
-     * @var string default nulll
+     * @var string default null
      */
     private $where = "";
     /**
@@ -27,6 +23,10 @@ class QueryBuilder extends DB
      * @var string default null
      */
     private $groupBy = "";
+    /**
+     * @var string
+     */
+    private $selector = "";
 
     public function __construct()
     {
@@ -34,11 +34,9 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function select
-     * @param columns array or string
-     * @return QueryBuilder
+     * @param $columns
+     * @return $this
      */
-
     public function select($columns)
     {
         $this->selector .= "SELECT ";
@@ -62,11 +60,9 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function update
-     * @param table string
-     * @return QueryBuilder
+     * @param $table
+     * @return $this
      */
-
     public function update($table)
     {
         $this->selector .= "UPDATE " . $table . " ";
@@ -74,58 +70,49 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function findAll
-     * @param table string
-     * @return QueryBuilder
+     * @param $table
+     * @return $this
      */
-
     public function findAll($table)
     {
         $this->selector = "SELECT *";
-        $this->table = $table . " ";
 
         return $this;
     }
 
     /**
-     * function count
-     * @param table string
-     * @return QueryBuilder
+     * @param $table
+     * @return $this
      */
-
     public function count($table)
     {
         $this->selector = "SELECT COUNT(*)";
-        $this->table = $table . " ";
 
         return $this;
     }
 
     /**
-     * function where
-     * @param column string
-     * @param operator string
-     * @param value string default null
-     * @return QueryBuilder
+     * @param $column
+     * @param $operator
+     * @param null $value
+     * @return $this
      */
-
     public function where($column, $operator, $value = null)
     {
         if (!isset($value)) {
             $value = $operator;
             $operator = "=";
         }
-        $this->where .= " " . $column . " " . $operator . " :" . $value . " ";
+        $this->where .= " " . $column . " " . $operator;
+        $this->where .= (is_int($value)) ? " " . $value : " '".$value."'";
         return $this;
     }
 
     /**
-     * function like
-     * @param column string
-     * @param value string default null
-     * @return QueryBuilder
+     * @param $column
+     * @param null $value
+     * @return $this
      */
-
     public function like($column, $value = null)
     {
         $this->where .= " " . $column . " LIKE CONCAT('%',:" . $value . ",'%') ";
@@ -133,12 +120,10 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function orderBy
-     * @param column string$
-     * @param order stirng
-     * @return QueryBuilder
+     * @param $column
+     * @param $order
+     * @return $this
      */
-
     public function orderBy($column, $order)
     {
         $this->order .= " " . $column . " " . $order . " ";
@@ -146,11 +131,9 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function groupBy
-     * @param group string
-     * @return QueryBuilder
+     * @param $group
+     * @return $this
      */
-
     public function groupBy($group)
     {
         $this->groupBy .= " " . $group . " ";
@@ -158,11 +141,9 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function limit
-     * @param limit string
-     * @return QueryBuilder
+     * @param $limit
+     * @return $this
      */
-
     public function limit($limit)
     {
         $this->limit .= " ".$limit." ";
@@ -170,10 +151,8 @@ class QueryBuilder extends DB
     }
 
     /**
-     * function get
-     * @return array
+     * @return array|bool
      */
-
     public function get()
     {
         if (!isset($this->selector) || !isset($this->table)) {
@@ -181,18 +160,75 @@ class QueryBuilder extends DB
         } else {
             $this->query =
                 $this->selector
-                . " FROM " . $this->table
+                . " FROM " . $this->table . " "
                 . (!empty($this->where) ? "WHERE" . $this->where : "")
                 . (!empty($this->groupBy) ? "GROUP BY" . $this->groupBy : "")
                 . (!empty($this->order) ? "ORDER BY" . $this->order : "")
                 . (!empty($this->limit) ? "LIMIT" . $this->limit : "");
 
             $query = $this->pdo->prepare($this->query);
-            $query->execute($this->parameters);
+            $query->execute();
             return $query->fetchAll();
         }
     }
 
+    /**
+     * @return void
+     */
+    public function save()
+    {
+        $propChild = get_object_vars($this);
+        $propDB = get_class_vars(get_class());
+
+        $columnsData = array_diff_key($propChild, $propDB);
+        $columns = array_keys($columnsData);
+
+        if (!is_numeric($this->id)) {
+
+            //INSERT
+            $sql = "INSERT INTO " . $this->table . " (" . implode(",", $columns) . ") VALUES (:" . implode(",:", $columns) . ");";
+        } else {
+
+            //UPDATE
+            foreach ($columns as $column) {
+                $sqlUpdate[] = $column . "=:" . $column;
+            }
+
+            $sql = "UPDATE " . $this->table . " SET " . implode(",", $sqlUpdate) . " WHERE id=:id;";
+        }
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        return $queryPrepared->execute($columnsData);
+    }
+
+    public function delete($column, $comp, $val = null){
+        if (!isset($this->table)) {
+            return false;
+        } else {
+            $this->query =
+                "DELETE FROM " . $this->table . " "
+                . "WHERE " . 
+                $column . " " . 
+                ($val !== null) ? $comp . " " . $val: "= " . $comp ;
+            $query = $this->pdo->prepare($this->query);
+            return $query->execute();
+        }
+    }
+
+    public function deleteAll(){
+        if(!isset($this->table)){
+            return false;
+        } else {
+            $this->query = "DELETE FROM " . $this->table;
+        }
+        $query = $this->pdo->prepare($this->query);
+        return $query->execute();
+    }
+
+
+    /**
+     * @return $this
+     */
     public function getQuery()
     {
         return $this;

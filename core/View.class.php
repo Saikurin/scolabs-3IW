@@ -14,10 +14,38 @@ class View
      */
     private $view;
     /**
+     * @var string
+     */
+    private $underfile;
+    /**
      * @var array -
      */
     private $data = [];
 
+    /**
+     * @var array
+     */
+    private $values = [];
+
+    /**
+     * @var array
+     */
+    private $jsFiles = [];
+
+    /**
+     * @var array
+     */
+    private $cssFiles = [];
+
+    /**
+     * @var array
+     */
+    private $linksCSS = [];
+
+    /**
+     * @var array
+     */
+    private $linksJS = [];
 
     /**
      * View constructor.
@@ -27,7 +55,14 @@ class View
     public function __construct($view, $template = "back")
     {
         $this->setTemplate($template);
-        $this->setView($view);
+
+        if (strpos($view, ".")) {
+            $view = explode(".", $view);
+            $this->underfile = $view[1];
+            $this->view = $view[0];
+        } else {
+            $this->setView($view);
+        }
     }
 
     /**
@@ -51,7 +86,7 @@ class View
     {
         $this->view = strtolower(trim($view));
 
-        if (!file_exists("views/" . $this->view . ".view.php")) {
+        if (!file_exists("views/" . $this->view . "/" . $this->view . ".view.php")) {
             die("La vue n'existe pas");
         }
     }
@@ -69,18 +104,72 @@ class View
     /**
      * @param string $modal
      * @param array $data
+     * @param array $values
      */
-    public function addModal(string $modal, array $data)
+    public function addModal(string $modal, array $data, array $values = [])
     {
         if (!file_exists("views/modals/" . $modal . ".mod.php")) {
             die("Le modal n'existe pas!!!");
         }
 
         $this->data = $data;
+        $this->values = $values;
 
         include "views/modals/" . $modal . ".mod.php";
     }
 
+    /**
+     * @param string $file
+     */
+    public function addJS(string $file)
+    {
+        $this->jsFiles[] = $file;
+    }
+
+    /**
+     * @param string $file
+     */
+    public function addCSS(string $file)
+    {
+        $this->cssFiles[] = $file;
+    }
+
+    public function addLinkCSS(string $link)
+    {
+        $this->linksCSS[] = $link;
+    }
+
+    public function addLinkJS(string $link)
+    {
+        $this->linksJS[] = $link;
+    }
+
+    public function loadStyles()
+    {
+        foreach ($this->cssFiles as $cssFile) {
+            echo "<link rel='stylesheet' type='text/css' href='public/css/" . $cssFile . "'/>";
+        }
+
+        foreach ($this->linksCSS as $link) {
+            echo "<link rel='stylesheet' type='text/css' href='" . $link . "'/>";
+        }
+
+        if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css")) {
+            echo "<link rel='stylesheet' type='text/css' href='views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".css'>";
+        }
+
+        foreach ($this->jsFiles as $jsFile) {
+            echo "<script src='public/js/" . $jsFile . "'></script>";
+        }
+
+        foreach ($this->linksJS as $link) {
+            echo "<script src='" . $link . "'></script>";
+        }
+
+        if (file_exists("views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js")) {
+            echo "<script src='views/" . $this->view . "/" . $this->underfile . "/" . $this->underfile . ".js'></script>";
+        }
+    }
 
     /**
      * @return void

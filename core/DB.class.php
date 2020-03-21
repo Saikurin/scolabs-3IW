@@ -8,11 +8,11 @@ class DB
     /**
      * @var string
      */
-    private $table;
+    protected $table;
     /**
      * @var PDO
      */
-    private $pdo;
+    protected $pdo;
 
     /**
      * DB constructor.
@@ -27,37 +27,5 @@ class DB
         }
 
         $this->table = DB_PREFIXE . get_called_class();
-    }
-
-
-    /**
-     * @return void
-     */
-    public function save()
-    {
-        $propChild = get_object_vars($this);
-        $propDB = get_class_vars(get_class());
-
-        $columnsData = array_diff_key($propChild, $propDB);
-        $columns = array_keys($columnsData);
-
-
-        if (!is_numeric($this->id)) {
-
-            //INSERT
-            $sql = "INSERT INTO " . $this->table . " (" . implode(",", $columns) . ") VALUES (:" . implode(",:", $columns) . ");";
-        } else {
-
-            //UPDATE
-            foreach ($columns as $column) {
-                $sqlUpdate[] = $column . "=:" . $column;
-            }
-
-            $sql = "UPDATE " . $this->table . " SET " . implode(",", $sqlUpdate) . " WHERE id=:id;";
-        }
-
-
-        $queryPrepared = $this->pdo->prepare($sql);
-        $queryPrepared->execute($columnsData);
     }
 }
