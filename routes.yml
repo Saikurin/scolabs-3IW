@@ -30,3 +30,9 @@
     - id: '[0-9]+'
   method:
     - GET
+/student/:
+  controller: Student
+  action: index
+/student/:id/:
+  controller: Student
+  action: synthesis
