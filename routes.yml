@@ -33,6 +33,14 @@
 /student/:
   controller: Student
   action: index
+  method:
+    - GET
+    - POST
 /student/:id/:
   controller: Student
   action: synthesis
+  params:
+    - id: '[0-9]+'
+  method :
+    - GET
+    - POST

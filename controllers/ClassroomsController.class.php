@@ -6,7 +6,7 @@ class ClassroomsController
     {
         $classroomsEntity = new classrooms();
 
-        $view = new View("classrooms_list", "admin");
+        $view = new View("classrooms.list", "admin");
         $view->assign("classrooms", $classroomsEntity->select('*')->get());
     }
 
@@ -15,7 +15,7 @@ class ClassroomsController
      */
     public function editAction(string $name)
     {
-        $view = new View('classrooms_edit', 'admin');
+        $view = new View('classrooms.edit', 'admin');
 
         $classroomEntity = new classrooms();
         $classroomEntity->select('*')->where('name', '=', $name);
@@ -51,7 +51,7 @@ class ClassroomsController
 
     public function addAction()
     {
-        $view = new View("classrooms_add", "admin");
+        $view = new View("classrooms.add", "admin");
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $errors = Validator::checkForm(classrooms::getNewEntityForm(), $_POST);
             if (count($errors) === 0) {

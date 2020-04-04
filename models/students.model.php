@@ -11,12 +11,38 @@ class students extends QueryBuilder
     /**
      * @var string
      */
-    protected $name;
+    protected $firstname;
 
     /**
      * @var string
      */
-    protected $level;
+    protected $lastname;
+
+    /**
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * @var string
+     */
+    protected $address;
+
+    /**
+     * @var string
+     */
+    protected $phoneNumber;
+
+    /**
+     * @var int
+     */
+    protected $parent1;
+
+    /**
+     * @var int
+     */
+    protected $parent2;
+
 
     /**
      * @return int|null
@@ -37,18 +63,18 @@ class students extends QueryBuilder
     /**
      * @return string
      */
-    public function getName(): string
+    public function getLastName(): string
     {
-        return $this->name;
+        return $this->lastname;
     }
 
     /**
-     * @param string $name
+     * @param string $lastname
      */
-    public function setName(string $name)
+    public function setLastname(string $lastname)
     {
-        if (strlen($name) <= 45) {
-            $this->name = $name;
+        if (strlen($lastname) <= 45) {
+            $this->lastname = $lastname;
         } else {
             DangerException::fatalError("Le nom ne doit pas dépasser 45 caractères");
         }
@@ -57,23 +83,82 @@ class students extends QueryBuilder
     /**
      * @return string
      */
-    public function getLevel(): string
+    public function getFirstname(): string
     {
-        return $this->level;
+        return $this->firstname;
     }
 
     /**
-     * @param string $level
+     * @param string $firstname
      */
-    public function setLevel(string $level)
+    public function setFirstName(string $firstname)
     {
-        if (strlen($level) <= 45) {
-            $this->level = $level;
+        if (strlen($firstname) <= 45) {
+            $this->firstname = $firstname;
         } else {
-            DangerException::fatalError("Le niveau ne doit pas dépasser 45 caractères");
+            DangerException::fatalError("Le prénom ne doit pas dépasser 45 caractères");
         }
     }
 
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email)
+    {
+        if (strlen($email) <= 255) {
+            $this->email = $email;
+        } else {
+            DangerException::fatalError("L'adresse mail ne doit pas excéder 254 caractères");
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress(string $address)
+    {
+        if (strlen($address) <= 255) {
+            $this->address = $address; // TODO : Do a better check for address & all
+        } else {
+            DangerException::fatalError("L'adresse ne doit pas excéder 255 caractères");
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getParent1(): string
+    {
+        return $this->parent1;
+    }
+
+    /**
+     * @param string $parent1
+     */
+    public function setParent1(string $parent1)
+    {
+        if ($parent1) { // Retournes un entier
+            $this->address = $parent1; // TODO : Do a better check for parents & create a better system (implémenter le système de rôles)
+        } else {
+            DangerException::fatalError("L'id du parent n'est pas correct");
+        }
+    }
     /**
      * @param array $datas
      * @return array

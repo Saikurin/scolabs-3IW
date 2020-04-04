@@ -1,13 +1,30 @@
 <?php
-
+/*
+ * indexAction : Renvoie la liste des étudiants (en limitant à 50 par pages et par ordre alphabétique) avec recherche possible
+ * synthesisAction : Renvoie la synthèse pour un seul étudiant basé sur le schéma fait préalablement
+ * addAction : Renvoie un formulaire simple d'ajout d'étudiant et prends en compte l'ajout lorsqu'il est fait sans relancer la vue
+ * updateAction : Permets de mettre à jour un étudiant (voir comment le mettre en forme)
+ */
 class StudentController
 {
     public function indexAction()
     {
-        $classroomsEntity = new classrooms();
+        $studentsEntity = new students();
 
-        $view = new View("student_list", "admin");
-        $view->assign("student", $classroomsEntity->select('*')->get());
+        $view = new View("students.list", "admin");
+        $view->assign("students", $studentsEntity->select('*')->get());
+    }
+
+    /**
+     * @param integer $id
+     */
+    public function synthesisAction(int $id){
+
+        $studentsEntity = new students();
+
+        $view = new View("students.synthesis", "admin");
+        $view->assign("student", $studentsEntity->select("*")->where("id_student", "=", $id)->get());
+        $view->assign("parents", $studentsEntity->select("parent1, parent2")->where("id_student", "=", $id));
     }
 
     /**
@@ -27,11 +44,6 @@ class StudentController
             $view->assign('classroom', $classroom[0]);
             $view->assign('form', classrooms::getEditEntityForm($classroom[0]));
         }
-    }
-
-    public function deleteAction()
-    {
-        // TODO : in wait delete function in queryBuilder
     }
 
     /**

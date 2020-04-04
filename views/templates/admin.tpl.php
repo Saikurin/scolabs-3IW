@@ -9,6 +9,6 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
-<?php include "views/" . $this->view . ".view.php"; ?>
+<?php include "views/" . $this->view . "/" . $this->underfile . "/" . $this->view . ".view.php"; ?>
 </body>
 </html>
