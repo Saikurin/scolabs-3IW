@@ -42,7 +42,6 @@ class rolesController
             $role = new roles();
             $role->setId($id);
             $role->setName($_POST['name']);
-            $role->setLevel($_POST['level']);
             $role->save();
             header('Location: ' . helpers::getUrl('Roles', 'index'));
         }
@@ -55,7 +54,6 @@ class rolesController
             $errors = Validator::checkForm(roles::getNewEntityForm(), $_POST);
             if (count($errors) === 0) {
                 $role = new roles();
-                $role->setLevel($_POST['level']);
                 $role->setName($_POST['name']);
                 $role->save();
                 header('Location: ' . helpers::getUrl('Roles', 'index'));
