@@ -30,3 +30,8 @@
     - id: '[0-9]+'
   method:
     - GET
+/hydrate:
+  controller: Classrooms
+  action: hydrate
+  method: 
+    - GET

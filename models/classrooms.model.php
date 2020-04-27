@@ -74,6 +74,13 @@ class classrooms extends QueryBuilder
         }
     }
 
+    public function hydrate(array $data){
+        $this->setId($data['id']);
+        $this->setName($data['name']);
+        $this->setLevel($data['level']);
+        return $this;
+    }
+
     /**
      * @param array $datas
      * @return array

@@ -49,6 +49,13 @@ class ClassroomsController
         }
     }
 
+    public function hydrateAction(){
+        $data = ['id' => 1, 'name' => 'name', 'level' => 'level'];
+        $classe = new classrooms();
+        $classe->hydrate($data);
+        var_dump($classe);
+    }
+
     public function addAction()
     {
         $view = new View("classrooms_add", "admin");
