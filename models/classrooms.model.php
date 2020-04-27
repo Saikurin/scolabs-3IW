@@ -24,6 +24,7 @@ class classrooms extends QueryBuilder
         $this->id = $datas['id'];
         $this->name = $datas['name'];
         $this->level = $datas['level'];
+        return $this;
     }
 
     /**
