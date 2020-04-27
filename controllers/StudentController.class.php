@@ -19,12 +19,19 @@ class StudentController
      * @param integer $id
      */
     public function synthesisAction(int $id){
-
+        // Synthèse de l'étudiant :
+        /*
+         * Pour le bon fonctionnement de la synthèse, besoin de :
+         * Modèles : Absences, teacher, subject & parent
+         * Tables : Créer la table parent et faire la clé étrangère pour pouvoir récupérer les informations nécessaire <- A faire !!!!!!!! le modèle existe déjà
+         * Tables : Créer une table user provisoire et la lier aux users/parents/élèves.
+         * Tables : Créer une table teacherToSubject pour assigner un enseignant à une matière
+         */
         $studentsEntity = new students();
-
+        $parentsEntity = new parents();
         $view = new View("students.synthesis", "admin");
         $view->assign("student", $studentsEntity->select("*")->where("id_student", "=", $id)->get());
-        $view->assign("parents", $studentsEntity->select("parent1, parent2")->where("id_student", "=", $id));
+        $view->assign("parents", $parentsEntity->select("*")->get());
     }
 
     /**

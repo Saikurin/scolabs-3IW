@@ -1,5 +1,4 @@
 <a href="<?= helpers::getUrl("Student", "index") ?>">Ajouter un étudiant</a>
-
 <table>
     <tbody>
     <?php foreach ($students as $student): ?>

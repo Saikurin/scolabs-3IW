@@ -1,7 +1,7 @@
 <?php
 
 
-class students extends QueryBuilder
+class parents extends QueryBuilder
 {
     /**
      * @var null|int
@@ -19,30 +19,9 @@ class students extends QueryBuilder
     protected $lastname;
 
     /**
-     * @var string
+     * @var integer
      */
-    protected $email;
-
-    /**
-     * @var string
-     */
-    protected $address;
-
-    /**
-     * @var string
-     */
-    protected $phoneNumber;
-
-    /**
-     * @var int
-     */
-    protected $parent1;
-
-    /**
-     * @var int
-     */
-    protected $parent2;
-
+    protected $idUser;
 
     /**
      * @return int|null
@@ -101,122 +80,29 @@ class students extends QueryBuilder
     }
 
     /**
-     * @return string $phoneNumber
+     * @return integer
      */
-    public function getPhoneNumber(): string
+    public function getIdUser(): string
     {
-        return $this->phoneNumber;
+        return $this->idUser;
     }
 
     /**
-     * @param string $phoneNumber
+     * @param integer $idUser
      */
-    public function setPhoneNumber(string $phoneNumber)
+    public function setIdUser(int $idUser)
     {
-        if (strlen($phoneNumber) <= 10) {
-            $this->phoneNumber = $phoneNumber;
+        if (is_int($idUser)) {
+            $this->idUser = $idUser;
         } else {
-            DangerException::fatalError("Le numéro de téléphone ne doit pas dépasser 10 caractères");
+            DangerException::fatalError("L'id utilisateur n'est pas correct");
         }
     }
 
     /**
-     * @return string
+     * @param array $datas
+     * @return array
      */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email)
-    {
-        if (strlen($email) <= 255) {
-            $this->email = $email;
-        } else {
-            DangerException::fatalError("L'adresse mail ne doit pas excéder 254 caractères");
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress(string $address)
-    {
-        if (strlen($address) <= 255) {
-            $this->address = $address; // TODO : Do a better check for address & all
-        } else {
-            DangerException::fatalError("L'adresse ne doit pas excéder 255 caractères");
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getParent1(): string
-    {
-        return $this->parent1;
-    }
-
-    /**
-     * @param string $parent1
-     */
-    public function setParent1(string $parent1)
-    {
-        if ($parent1) { // Retournes un entier
-            $this->address = $parent1; // TODO : Do a better check for parents & create a better system (implémenter le système de rôles)
-        } else {
-            DangerException::fatalError("L'id du parent n'est pas correct");
-        }
-    }
-
-    /**
-     * @param string $parent2
-     */
-    public function setParent2(string $parent2)
-    {
-        if ($parent2) { // Retournes un entier
-            $this->parent2 = $parent2; // TODO : Do a better check for parents & create a better system (implémenter le système de rôles)
-        } else {
-            DangerException::fatalError("L'id du parent n'est pas correct");
-        }
-    }
-
-
-    /**
-     * @param array $data
-     * @param bool $return
-     * @return students $student
-     */
-
-    public function hydrate(array $data, bool $return){
-            $this->setId($data['id']);
-            $this->setFirstName($data['firstname']);
-            $this->setLastname($data['lastname']);
-            $this->setEmail($data['email']);
-            $this->setPhoneNumber($data['phoneNumber']);
-            $this->setAddress($data['address']);
-            $this->setParent1($data['parent1']);
-            $this->setParent2($data['parent2']);
-
-        var_dump($this);
-        if ($return == true){
-            return $this;
-        }
-    }
-
-
     public static function getEditEntityForm(array $datas)
     {
         return [
