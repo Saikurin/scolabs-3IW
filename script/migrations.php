@@ -1,8 +1,8 @@
 <?php
 
-require "core/ConstantLoader.class.php";
-require "core/DB.class.php";
-require "core/Migrations.class.php";
+require "core/ConstantLoader.php";
+require "core/DB.php";
+require "core/Migrations.php";
 
 new ConstantLoader();
 

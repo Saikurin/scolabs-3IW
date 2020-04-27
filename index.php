@@ -4,10 +4,10 @@ session_start();
 function myAutoloader($class)
 {
     require("vendor/autoload.php");
-    if (file_exists("core/" . $class . ".class.php")) {
-        include "core/" . $class . ".class.php";
-    } elseif (file_exists("models/" . $class . ".model.php")) {
-        include "models/" . $class . ".model.php";
+    if (file_exists("core/" . $class . ".php")) {
+        include "core/" . $class . ".php";
+    } elseif (file_exists("models/" . $class . ".php")) {
+        include "models/" . $class . ".php";
     } elseif (file_exists("exceptions/" . $class . ".exception.php")) {
         include "exceptions/" . $class . ".exception.php";
     }
