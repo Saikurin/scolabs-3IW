@@ -18,6 +18,14 @@ class classrooms extends QueryBuilder
      */
     protected $level;
 
+
+    public function hydrate(array $datas)
+    {
+        $this->id = $datas['id'];
+        $this->name = $datas['name'];
+        $this->level = $datas['level'];
+    }
+
     /**
      * @return int|null
      */
