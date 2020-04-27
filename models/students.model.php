@@ -193,30 +193,6 @@ class students extends QueryBuilder
         }
     }
 
-
-    /**
-     * @param array $data
-     * @param bool $return
-     * @return students $student
-     */
-
-    public function hydrate(array $data, bool $return){
-            $this->setId($data['id']);
-            $this->setFirstName($data['firstname']);
-            $this->setLastname($data['lastname']);
-            $this->setEmail($data['email']);
-            $this->setPhoneNumber($data['phoneNumber']);
-            $this->setAddress($data['address']);
-            $this->setParent1($data['parent1']);
-            $this->setParent2($data['parent2']);
-
-        var_dump($this);
-        if ($return == true){
-            return $this;
-        }
-    }
-
-
     public static function getEditEntityForm(array $datas)
     {
         return [
