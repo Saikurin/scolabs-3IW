@@ -1,5 +1,7 @@
 <?php
 
+use Scolabs\Core\Migrations;
+
 class Version20200228151214 extends Migrations {
     public function up()
     {

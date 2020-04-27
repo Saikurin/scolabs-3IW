@@ -1,5 +1,10 @@
 <?php
 
+namespace Scolabs\Models;
+
+use Scolabs\Core\helpers;
+use Scolabs\Core\QueryBuilder;
+use Scolabs\Exception\DangerException;
 
 class classrooms extends QueryBuilder
 {

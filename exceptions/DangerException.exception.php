@@ -1,5 +1,7 @@
 <?php
 
+namespace Scolabs\Exception;
+
 class DangerException extends CustomException
 {
 

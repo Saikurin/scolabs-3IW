@@ -1,5 +1,7 @@
 <?php
 
+namespace Scolabs\Core;
+
 class QueryBuilder extends DB
 {
     // TO DO -> JOIN, DELETE, SAVE

@@ -1,15 +1,20 @@
 <?php
+
+use Scolabs\Core\ConstantLoader;
+use Scolabs\Core\Router;
+
 session_start();
 
 function myAutoloader($class)
 {
+
     require("vendor/autoload.php");
-    if (file_exists("core/" . $class . ".class.php")) {
-        include "core/" . $class . ".class.php";
-    } elseif (file_exists("models/" . $class . ".model.php")) {
-        include "models/" . $class . ".model.php";
-    } elseif (file_exists("exceptions/" . $class . ".exception.php")) {
-        include "exceptions/" . $class . ".exception.php";
+    $class = str_replace('Scolabs', '', $class);
+    $class = str_replace('\\', '/', $class);
+    if($class[0] === '/') {
+        include substr($class.'.php', 1);
+    } else {
+        include $class.'.php';
     }
  }
 

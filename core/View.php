@@ -1,5 +1,7 @@
 <?php
 
+namespace Scolabs\Core;
+
 /**
  * Class View
  */

@@ -1,5 +1,7 @@
 <?php
 
+namespace Scolabs\Core;
+
 class Auth
 {
 

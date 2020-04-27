@@ -1,4 +1,5 @@
 <?php
+namespace Scolabs\Core;
 
 class Migrations
 {

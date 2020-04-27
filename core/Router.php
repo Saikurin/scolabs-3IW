@@ -1,5 +1,9 @@
 <?php
 
+namespace Scolabs\Core;
+
+use Scolabs\Exception\DangerException;
+
 class Router
 {
 

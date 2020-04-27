@@ -1,5 +1,7 @@
 <?php
 
+namespace Scolabs\Core;
+
 class Route
 {
 
@@ -82,8 +84,8 @@ class Route
         if (is_string($this->callable)) {
             $params = explode('#', $this->callable);
             $controller = $params[0] . "Controller";
-            if (file_exists("controllers/" . $controller . ".class.php")) {
-                include "controllers/" . $controller . ".class.php";
+            if (file_exists("controllers/" . $controller . ".php")) {
+                include "controllers/" . $controller . ".php";
                 if (class_exists($controller)) {
                     $controller = new $controller();
                 }

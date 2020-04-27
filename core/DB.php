@@ -1,5 +1,8 @@
 <?php
 
+namespace Scolabs\Core;
+use PDO;
+
 /**
  * Class DB
  */
