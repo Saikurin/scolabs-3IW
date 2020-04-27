@@ -21,10 +21,12 @@ class classrooms extends QueryBuilder
 
     public function hydrate(array $datas)
     {
-        $this->setId($datas['id']);
-        $this->setName($datas['name']);
-        $this->setLevel($datas['level']);
-        return $this;
+        foreach ($datas as $key => $value) {
+            $setter = 'set' . ucfirst($key);
+            if (method_exists($this, $setter)) {
+                $this->$setter($value);
+            }
+        }
     }
 
     /**
