@@ -21,9 +21,9 @@ class classrooms extends QueryBuilder
 
     public function hydrate(array $datas)
     {
-        $this->id = $datas['id'];
-        $this->name = $datas['name'];
-        $this->level = $datas['level'];
+        $this->id = $this->setId($datas['id']);
+        $this->name = $this->setName($datas['name']);
+        $this->level = $this->setLevel($datas['level']);
         return $this;
     }
 
